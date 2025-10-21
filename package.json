@@ -4,7 +4,8 @@
   "description": "Teste de REST API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node"
@@ -12,6 +13,11 @@
   "author": "Gabriel do Nascimento",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0"
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
