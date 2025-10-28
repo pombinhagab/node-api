@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3307,
+            "driver": "MariaDB",
+            "name": "ecommerce-local",
+            "database": "ecommerce",
+            "username": "root",
+            "password": "root"
+        }
+    ]
+}
