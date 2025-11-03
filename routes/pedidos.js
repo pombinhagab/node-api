@@ -8,31 +8,45 @@ router.get("/", (req, res, next) => {
     if (error) {
       return res.status(500).send({ error: error });
     }
+    conn.query(
+      `SELECT 
+        pedidos.id_pedido,
+        pedidos.quantidade_pedido,
+        produtos.id_produto,
+        produtos.nome_produto,
+        produtos.preco_produto
+      FROM pedidos
+      INNER JOIN produtos
+        ON produtos.id_produto = pedidos.id_produto;`,
+      (error, result, field) => {
+        conn.release(); // libera conexão sempre
 
-    conn.query("SELECT * FROM pedidos;", (error, result, field) => {
-      conn.release(); // libera conexão sempre
+        if (error) {
+          return res.status(500).send({ error: error });
+        }
 
-      if (error) {
-        return res.status(500).send({ error: error });
+        const response = {
+          quantidade_pedidos_registrados: result.length,
+          pedidos: result.map((ped) => {
+            return {
+              id_pedido: ped.id_pedido,
+              quantidade_pedido: ped.quantidade_pedido,
+              produto: {
+                id_produto: ped.id_produto,
+                nome_produto: ped.nome_produto,
+                preco_produto: ped.preco_produto,
+              },
+              request: {
+                tipo: "GET",
+                descricao: "Retorna os detalhes de um pedido específico",
+                url: "http://localhost:3000/pedidos/" + ped.id_pedido,
+              },
+            };
+          }),
+        };
+        res.status(200).send(response);
       }
-
-      const response = {
-        quantidade: result.length,
-        pedidos: result.map((ped) => {
-          return {
-            id_pedido: ped.id_pedido,
-            id_produto: ped.id_produto,
-            quantidade_pedido: ped.quantidade_pedido,
-            request: {
-              tipo: "GET",
-              descricao: "Retorna os detalhes de um pedido específico",
-              url: "http://localhost:3000/pedidos/" + ped.id_pedido,
-            },
-          };
-        }),
-      };
-      res.status(200).send(response);
-    });
+    );
   });
 });
 
