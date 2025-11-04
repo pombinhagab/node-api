@@ -13,6 +13,7 @@
   "author": "Gabriel do Nascimento",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "morgan": "^1.10.1",
